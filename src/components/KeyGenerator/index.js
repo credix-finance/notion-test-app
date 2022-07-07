@@ -6,6 +6,7 @@ import "./style.scss";
 
 const KeyGenerator: FC = () => {
   const [pubKey, setPubkey] = useState("a");
+  const [records, setRecords] = useState([{"Pubkey": "a", "Name": "b", "Description": 'c'}])
   const [name, setName] = useState("borrower name");
   const [description, setDescription] = useState("borrower description");
 
@@ -14,12 +15,24 @@ const KeyGenerator: FC = () => {
     setPubkey(e.target.value); 
   };
 
+  useEffect(() => {
+    if (records) {
+      let pubKeyMap = {};
+      for (var i = 0; i < records.length; i++) {
+        pubKeyMap[records[i]["Pubkey"]] = {
+          "Name": records[i]["Name"],
+          "Description": records[i]["Description"]
+        }
+      }
+      setName(pubKeyMap[pubKey]["Name"]);
+      setDescription(pubKeyMap[pubKey]["Description"]);
+    }
+  }, [records]); // Only re-run the effect if count changes
+
   const handleSubmit = async () => {
     const notionPageResponse = await fetch('https://notion-cloudflare-worker.credix.workers.dev/v1/table/6155ffcb4873495d9c0b49f8ca6a8781')
-
-    // const notionPageData = await notionPageResponse.json(); 
-    console.log(notionPageResponse);
-    // setName(notionPageData.results[0]["id"]);
+    const notionPageData = await notionPageResponse.json()
+    setRecords(notionPageData); 
   };
 
   return (
