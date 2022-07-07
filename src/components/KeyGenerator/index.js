@@ -1,11 +1,10 @@
 import React, {FC, useState, useEffect} from 'react';
 import {Button} from "@material-ui/core";
-import { NotionAPI } from 'notion-client'
+
 
 import "./style.scss";
 
 const KeyGenerator: FC = () => {
-  const notion = new NotionAPI()
   const [pubKey, setPubkey] = useState("a");
   const [name, setName] = useState("borrower name");
   const [description, setDescription] = useState("borrower description");
@@ -16,9 +15,11 @@ const KeyGenerator: FC = () => {
   };
 
   const handleSubmit = async () => {
-    // const notionPageResponse = await fetch(' https://notion-cloudflare-worker.credix.workers.dev/v1/databases/6155ffcb4873495d9c0b49f8ca6a8781')
-    const notionPageResponse = await notion.getPage('6155ffcb4873495d9c0b49f8ca6a8781')
+    const notionPageResponse = await fetch('https://notion-cloudflare-worker.credix.workers.dev/v1/table/6155ffcb4873495d9c0b49f8ca6a8781')
+
+    // const notionPageData = await notionPageResponse.json(); 
     console.log(notionPageResponse);
+    // setName(notionPageData.results[0]["id"]);
   };
 
   return (
