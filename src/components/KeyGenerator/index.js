@@ -6,7 +6,7 @@ import "./style.scss";
 
 const KeyGenerator: FC = () => {
   const [pubKey, setPubkey] = useState("a");
-  const [records, setRecords] = useState([{"Pubkey": "a", "Name": "b", "Description": 'c'}])
+  const [records, setRecords] = useState([{"Pubkey": "a", "Name": "name placeholder", "Description": 'description placeholder'}])
   const [name, setName] = useState("borrower name");
   const [description, setDescription] = useState("borrower description");
 
