@@ -6,10 +6,8 @@ import "./style.scss";
 
 const KeyGenerator: FC = () => {
   const [pubKey, setPubkey] = useState("a");
-  const [records, setRecords] = useState([{"Pubkey": "a", "Name": "name placeholder", "Description": 'description placeholder'}])
-  const [name, setName] = useState("borrower name");
-  const [description, setDescription] = useState("borrower description");
-
+  const [records, setRecords] = useState([{ "Pubkey": "a" }]);
+  const [recordRow, setRecordRow] = useState([<p>"no data yet, please input a public key"</p>]); 
 
   const handleChange = (e) => {
     setPubkey(e.target.value); 
@@ -19,13 +17,23 @@ const KeyGenerator: FC = () => {
     if (records) {
       let pubKeyMap = {};
       for (var i = 0; i < records.length; i++) {
-        pubKeyMap[records[i]["Pubkey"]] = {
-          "Name": records[i]["Name"],
-          "Description": records[i]["Description"]
-        }
+        pubKeyMap[records[i]["Pubkey"]] = records[i]
       }
-      setName(pubKeyMap[pubKey]["Name"]);
-      setDescription(pubKeyMap[pubKey]["Description"]);
+      if (pubKeyMap[pubKey]) {
+        let recordRowNew = [];
+        for (const [key, value] of Object.entries(pubKeyMap[pubKey])) {
+          let rowNewElement = (
+            <div>
+              <h3>{key}</h3>
+              <p>{value}</p>
+            </div>
+          );
+          recordRowNew.push(rowNewElement);
+        }
+        setRecordRow(recordRowNew)
+      } else {
+        setRecordRow([<p>"Record not found"</p>])
+      }
     }
   }, [records]); // Only re-run the effect if count changes
 
@@ -55,10 +63,7 @@ const KeyGenerator: FC = () => {
         >
          GET INFO
         </Button>
-        <h3>Name:</h3>
-        <p>{name}</p>
-        <h3>Description:</h3>
-        <p>{description}</p>
+        {recordRow}
        </div>
     </div>
   );
