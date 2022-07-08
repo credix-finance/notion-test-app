@@ -5,8 +5,8 @@ import {Button} from "@material-ui/core";
 import "./style.scss";
 
 const KeyGenerator: FC = () => {
-  const [pubKey, setPubkey] = useState("a");
-  const [records, setRecords] = useState([{ "Pubkey": "a" }]);
+  const [pubKey, setPubkey] = useState("instert public key");
+  const [records, setRecords] = useState([{}]);
   const [recordRow, setRecordRow] = useState([<p>"no data yet, please input a public key"</p>]); 
 
   const handleChange = (e) => {
@@ -52,7 +52,7 @@ const KeyGenerator: FC = () => {
         <input
           name="pubKey"
           type="text"
-          value={pubKey}
+          placeholder={pubKey}
           onChange={handleChange}
           className="airdrop-pk-input stake-input borrower-pk credix-button MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary balance-button"
         />
